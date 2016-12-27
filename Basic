@@ -1,0 +1,31 @@
+
+
+
+Add Column:
+************************************************
+ALTER TABLE TableName
+ADD Column_Name NUMBER;
+
+
+Set Primary Key:
+************************************************
+ALTER TABLE TableName
+ADD CONSTRAINT pk_TargetID PRIMARY KEY (Column_Name);
+
+
+Set Foreign Key:
+************************************************
+ALTER TABLE Table_Name
+ADD CONSTRAINT FK_SALES_CATEGORY_ID
+FOREIGN KEY (Column_name)
+REFERENCES Other_Table_Name(Other_Table_Name--Column_Name);
+
+
+Set Sequence:
+************************************************
+CREATE SEQUENCE XXTZ_SALES_PERSON_TARGET_T_SQE
+START WITH 7
+INCREMENT BY 1
+maxvalue 9999
+NOCYCLE;
+
