@@ -1,0 +1,20 @@
+                                              MODIFY size update: 
+
+
+ALTER TABLE xxems_cust_po_headers_all  MODIFY payment_terms varchar2(300)
+ 
+                                              Add column: 
+
+ALTER TABLE table_name  ADD column_name datatype;
+
+Alter TAble XXEMS_HEADERS_ALL add (SUPP_CONTACT_NAME VARCHAR2(100));
+
+
+                                               update: 
+
+update xxems_cust_nes_all set update_flag='C' where cpo_header_id=1000113;
+
+
+                                                Select : 
+
+SELECT * FROM xxems_lines_all where cpo_header_id=10013 order by 1 desc;
