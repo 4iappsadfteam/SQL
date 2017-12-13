@@ -1,0 +1,2 @@
+
+="UPDATE xxpm_property_buildings SET BUILD_NUMBER='"&C2&"' WHERE BUILD_name='"&D2&"';"
