@@ -24,4 +24,7 @@ SELECT DISTINCT OBJECT_NAME
 select * from ALL_TABLES 
 where owner ='SBCMPROD'
 AND NUM_ROWS = 0;
+-----------or-------------------
+select table_name, num_rows from user_tables
+where NUM_ROWS=0; 
 ===========================================================================================================================
