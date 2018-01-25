@@ -19,3 +19,9 @@ SELECT DISTINCT OBJECT_NAME
   FROM USER_OBJECTS
  WHERE OBJECT_TYPE = 'TABLE'
  ===========================================================================================================================
+****From the Schema***** Empty table
+
+select * from ALL_TABLES 
+where owner ='SBCMPROD'
+AND NUM_ROWS = 0;
+===========================================================================================================================
