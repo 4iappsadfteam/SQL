@@ -1,4 +1,18 @@
 
+
+Find constrain from table
+select * 
+from
+    all_constraints 
+where
+    r_constraint_name in
+    (select       constraint_name
+    from
+       all_constraints
+    where
+       table_name='XXSC_CERTIFICATION_HEADERS') 
+;
+==============================================
 ==*******List of Table From Scheme*********=
 
 SELECT DISTINCT OWNER, OBJECT_NAME, OBJECT_TYPE
