@@ -1,0 +1,4 @@
+
+select name, regexp_replace(name, '[^0-9]', '') number_of_days, sysdate, TO_DATE(&date,'dd-mon-yyyy') + regexp_replace(name, '[^0-9]', '') new_date
+from XXSTG_PAYMENT_TERMS
+where name not in ('IMMEDIATE','Cash','LC','Net Monthly Account','BG','End of Month','Immediate','2/10 Net 30');
