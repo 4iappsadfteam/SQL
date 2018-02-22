@@ -1,0 +1,2 @@
+Date to 5 days adding
+select TO_DATE(:DATE1)+5  from dual; 
