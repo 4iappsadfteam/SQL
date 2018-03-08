@@ -1,2 +1,6 @@
 
 ="UPDATE xxpm_property_buildings SET BUILD_NUMBER='"&C2&"' WHERE BUILD_name='"&D2&"';"
+
+
+
+=CONCATENATE("insert into XXSTG_PO_MATCH_OPTION_UPD (PO_NUMBER,PO_HDR_ID,PO_LINE_ID,PO_LINE_LOC_ID) values ('",A2,"','",B2,"','",C2,"','",D2,"');")
