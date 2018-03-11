@@ -46,9 +46,9 @@ BEGIN
   LOOP
     MERGE INTO XXSTG_LOCATIONS a USING
     (SELECT l_tbl (i).LOCATION_DETAILS_ID ,
-      l_tbl (i).LOCATION_CODE ,
-      l_tbl (i).LOCATION_NAME ,
-      l_tbl (i).EFFECTIVE_START_DATE ,
+      l_tbl (i).LOCATION_CODE   LOCATION_CODE,
+      l_tbl (i).LOCATION_NAME   LOCATION_NAME,
+      l_tbl (i).EFFECTIVE_START_DATE EFFECTIVE_START_DATE,
       l_tbl (i).EFFECTIVE_END_DATE ,
       l_tbl (i).ACTIVE_STATUS ,
       l_tbl (i).ADDRESS_LINE_1 ,
