@@ -1,0 +1,130 @@
+
+======================================================
+declare 
+p_data clob;
+begin
+xxstg_integration_pkg.LOCATIONS(:p_data);
+end;
+
+======================================================
+
+PROCEDURE LOCATIONS(
+    p_xml_data IN CLOB)
+AS
+  acct_doc XMLTYPE := xmltype.createxml (p_xml_data);
+TYPE tbl_type
+IS
+  TABLE OF XXSTG_LOCATIONS%ROWTYPE INDEX BY BINARY_INTEGER;
+  l_tbl tbl_type;
+  CURSOR rec
+  IS
+    SELECT LOCATION_DETAILS_ID ,
+      LOCATION_CODE ,
+      LOCATION_NAME ,
+      EFFECTIVE_START_DATE ,
+      EFFECTIVE_END_DATE ,
+      ACTIVE_STATUS ,
+      ADDRESS_LINE_1 ,
+      ADDRESS_LINE_2 ,
+      ADDRESS_LINE_3 ,
+      ADDRESS_LINE_4 ,
+      TOWN_OR_CITY ,
+      COUNTRY ,
+      SET_ID ,
+      BUSINESS_GROUP_ID ,
+      LOCATION_ID ,
+      MAIN_ADDRESS_ID ,
+      OBJECT_VERSION_NUMBER
+    FROM XMLTABLE ('/DATA_DS/G_1' PASSING acct_doc COLUMNS LOCATION_DETAILS_ID NUMBER PATH 'LOCATION_DETAILS_ID     ', LOCATION_CODE VARCHAR2(60) PATH 'LOCATION_CODE           ', LOCATION_NAME VARCHAR2(240) PATH 'LOCATION_NAME           ', EFFECTIVE_START_DATE DATE PATH 'EFFECTIVE_START_DATE    ', EFFECTIVE_END_DATE DATE PATH 'EFFECTIVE_END_DATE      ', ACTIVE_STATUS VARCHAR2(30) PATH 'ACTIVE_STATUS           ', ADDRESS_LINE_1 VARCHAR2(240) PATH 'ADDRESS_LINE_1          ', ADDRESS_LINE_2 VARCHAR2(240) PATH 'ADDRESS_LINE_2          ', ADDRESS_LINE_3 VARCHAR2(240) PATH 'ADDRESS_LINE_3          ', ADDRESS_LINE_4 VARCHAR2(240) PATH 'ADDRESS_LINE_4          ', TOWN_OR_CITY VARCHAR2(30) PATH 'TOWN_OR_CITY            ', COUNTRY VARCHAR2(60) PATH 'COUNTRY                 ', SET_ID NUMBER PATH 'SET_ID                  ', BUSINESS_GROUP_ID NUMBER PATH 'BUSINESS_GROUP_ID       ', LOCATION_ID NUMBER PATH 'LOCATION_ID             ', MAIN_ADDRESS_ID NUMBER PATH 'MAIN_ADDRESS_ID         ',
+      OBJECT_VERSION_NUMBER                                                    NUMBER PATH 'OBJECT_VERSION_NUMBER   ');
+BEGIN
+  OPEN rec;
+  FETCH rec BULK COLLECT
+  INTO l_tbl;
+  CLOSE rec;
+  FOR i IN l_tbl.FIRST .. l_tbl.LAST
+  LOOP
+    MERGE INTO XXSTG_LOCATIONS a USING
+    (SELECT l_tbl (i).LOCATION_DETAILS_ID ,
+      l_tbl (i).LOCATION_CODE ,
+      l_tbl (i).LOCATION_NAME ,
+      l_tbl (i).EFFECTIVE_START_DATE ,
+      l_tbl (i).EFFECTIVE_END_DATE ,
+      l_tbl (i).ACTIVE_STATUS ,
+      l_tbl (i).ADDRESS_LINE_1 ,
+      l_tbl (i).ADDRESS_LINE_2 ,
+      l_tbl (i).ADDRESS_LINE_3 ,
+      l_tbl (i).ADDRESS_LINE_4 ,
+      l_tbl (i).TOWN_OR_CITY ,
+      l_tbl (i).COUNTRY ,
+      l_tbl (i).SET_ID ,
+      l_tbl (i).BUSINESS_GROUP_ID ,
+      l_tbl (i).LOCATION_ID ,
+      l_tbl (i).MAIN_ADDRESS_ID ,
+      l_tbl (i).OBJECT_VERSION_NUMBER
+    FROM DUAL
+    ) b ON (a.LOCATION_DETAILS_ID = b.LOCATION_DETAILS_ID)
+  WHEN MATCHED THEN
+    UPDATE
+    SET
+      --NO Primary key
+      LOCATION_CODE         =b.LOCATION_CODE ,
+      LOCATION_NAME         =b.LOCATION_NAME ,
+      EFFECTIVE_START_DATE  =b.EFFECTIVE_START_DATE ,
+      EFFECTIVE_END_DATE    =b.EFFECTIVE_END_DATE ,
+      ACTIVE_STATUS         =b.ACTIVE_STATUS ,
+      ADDRESS_LINE_1        =b.ADDRESS_LINE_1 ,
+      ADDRESS_LINE_2        =b.ADDRESS_LINE_2 ,
+      ADDRESS_LINE_3        =b.ADDRESS_LINE_3 ,
+      ADDRESS_LINE_4        =b.ADDRESS_LINE_4 ,
+      TOWN_OR_CITY          =b.TOWN_OR_CITY ,
+      COUNTRY               =b.COUNTRY ,
+      SET_ID                =b.SET_ID ,
+      BUSINESS_GROUP_ID     =b.BUSINESS_GROUP_ID ,
+      LOCATION_ID           =b.LOCATION_ID ,
+      MAIN_ADDRESS_ID       =b.MAIN_ADDRESS_ID ,
+      OBJECT_VERSION_NUMBER =b.OBJECT_VERSION_NUMBER
+      WHEN NOT MATCHED THEN
+    INSERT
+      (
+        LOCATION_DETAILS_ID ,
+        LOCATION_CODE ,
+        LOCATION_NAME ,
+        EFFECTIVE_START_DATE ,
+        EFFECTIVE_END_DATE ,
+        ACTIVE_STATUS ,
+        ADDRESS_LINE_1 ,
+        ADDRESS_LINE_2 ,
+        ADDRESS_LINE_3 ,
+        ADDRESS_LINE_4 ,
+        TOWN_OR_CITY ,
+        COUNTRY ,
+        SET_ID ,
+        BUSINESS_GROUP_ID ,
+        LOCATION_ID ,
+        MAIN_ADDRESS_ID ,
+        OBJECT_VERSION_NUMBER
+      )
+      VALUES
+      (
+        b.LOCATION_DETAILS_ID ,
+        b.LOCATION_CODE ,
+        b.LOCATION_NAME ,
+        b.EFFECTIVE_START_DATE ,
+        b.EFFECTIVE_END_DATE ,
+        b.ACTIVE_STATUS ,
+        b.ADDRESS_LINE_1 ,
+        b.ADDRESS_LINE_2 ,
+        b.ADDRESS_LINE_3 ,
+        b.ADDRESS_LINE_4 ,
+        b.TOWN_OR_CITY ,
+        b.COUNTRY ,
+        b.SET_ID ,
+        b.BUSINESS_GROUP_ID ,
+        b.LOCATION_ID ,
+        b.MAIN_ADDRESS_ID ,
+        b.OBJECT_VERSION_NUMBER
+      );
+  END LOOP;
+  COMMIT;
+END XXSTG_LOCATIONS;
