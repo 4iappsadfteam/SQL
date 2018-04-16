@@ -1,4 +1,7 @@
 
+List of Table and View Count
+select object_type, count(*) from all_objects where owner = 'HR' group by object_type order by object_type 
+============================================================================================================
 
 Find constrain from table
 select * 
