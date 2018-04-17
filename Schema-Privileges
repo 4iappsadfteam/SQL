@@ -1,0 +1,7 @@
+XXFND WorkSheet:
+grant execute on xxfnd.xxfnd_pkg to sbcmtest;
+grant execute any procedure to sbcmtest;
+********************************************************
+grant connect to XXFND;
+grant all privileges to XXFND;
+********************************************************
