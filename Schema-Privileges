@@ -5,3 +5,6 @@ grant execute any procedure to sbcmtest;
 grant connect to XXFND;
 grant all privileges to XXFND;
 ********************************************************
+synonym:
+create synonym xxfnd_pkg for xxfnd.xxfnd_pkg;
+********************************************************
