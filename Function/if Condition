@@ -1,0 +1,58 @@
+function get_Total_Other_Charg(p_cont_header_id    number,
+							  p_appl_head_id      number,
+							  p_version           number)
+         return number;
+-----------------------------------------------------------------
+
+function get_Total_Other_Charg (p_cont_header_id    number,
+                          p_appl_head_id      number,
+                          p_version           number)
+         return number is
+    
+cursor c1(cont_head_id number,app_hdr_id number) is
+       select  max(appl_header_id) as app_id 
+       from   (select  appl_header_id
+       from    xxsc_pay_appl_headers 
+       where   cont_header_id  = cont_head_id
+       and     appl_header_id  < app_hdr_id
+       and     payment_type    = 'Interim')a;
+
+cursor c2(app_hdr_id number,ver number) is
+       select TOT_OTH_CHARGE
+       from   xxsc_certification_headers 
+       where  appl_header_id  = app_hdr_id 
+       and    approval_status = 'APR' 
+       and    version         = ver;   
+
+cursor c3(cont_hdr_id number,ver number,app_hdr_id number) is
+       select  TOT_OTH_CHARGE
+       from    xxsc_pay_appl_headers 
+       where   cont_header_id  = cont_hdr_id
+       and     appl_header_id  = app_hdr_id
+       and     version         = ver;      
+
+    r1 c1%ROWTYPE;
+    
+    v_Amt number := 0;       
+      
+begin
+
+   open  c1(p_cont_header_id,p_appl_head_id) ;
+   fetch c1 into r1 ;
+
+--   if(c1%notfound) then   
+      open  c2(r1.app_id,p_version) ;
+      fetch c2 into v_Amt ;   
+         if(c2%notfound) then
+            open  c3(p_cont_header_id,p_version,r1.app_id) ;
+            fetch c3 into v_Amt ;
+            close c3 ; 
+          else
+            return v_Amt;
+          end if;
+--    end if;
+   
+   return v_Amt;
+   close c2 ;
+   close c1 ;
+end get_Total_Other_Charg;
