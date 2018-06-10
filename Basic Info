@@ -1,0 +1,2 @@
+Get the name upto mail id
+select substr(NAME, 1, instr(NAME, '@')-1) as email from APPROVAL_HIST_V;
