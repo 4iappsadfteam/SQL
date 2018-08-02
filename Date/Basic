@@ -9,3 +9,12 @@ SELECT TO_DATE(:DATE1)+:no     AS to_date,
   TO_CHAR( ADD_MONTHS(:DATE1,(6)), 'DD-MON-YYYY') to_HALF,
   TO_CHAR( ADD_MONTHS(:DATE1,(12)), 'DD-MON-YYYY') to_year
 FROM dual;
+
+---------Quat,Half,Anna
+SELECT TO_DATE(:DATE1)+:no     AS to_date,
+  TO_DATE(:DATE1)     +(:no*7) AS to_week,
+  TO_CHAR( ADD_MONTHS(:DATE1,:no), 'DD-MON-YYYY') to_month,
+  TO_CHAR( ADD_MONTHS(:DATE1,(:no*3)), 'DD-MON-YYYY') to_quart,
+  TO_CHAR( ADD_MONTHS(:DATE1,(:no*6)), 'DD-MON-YYYY') to_quart,
+  TO_CHAR( ADD_MONTHS(:DATE1,(:no*12)), 'DD-MON-YYYY') to_year
+FROM dual;
