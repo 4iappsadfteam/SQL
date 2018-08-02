@@ -18,3 +18,14 @@ SELECT TO_DATE(:DATE1)+:no     AS to_date,
   TO_CHAR( ADD_MONTHS(:DATE1,(:no*6)), 'DD-MON-YYYY') to_quart,
   TO_CHAR( ADD_MONTHS(:DATE1,(:no*12)), 'DD-MON-YYYY') to_year
 FROM dual;
+
+-----ADF--OUTPUT Date---
+SELECT 
+  :FROM_DATE As From_Date,
+  TO_DATE(:FROM_DATE, 'yyyy-MM-dd')+:Total_Days AS to_Days,
+  TO_DATE(:FROM_DATE, 'yyyy-MM-dd')+(:Total_Days*7) AS to_Weeks,
+  TO_CHAR( ADD_MONTHS(TO_DATE(:FROM_DATE, 'yyyy-MM-dd'),:Total_Days), 'DD-MON-YYYY') to_Month,
+  TO_CHAR( ADD_MONTHS(TO_DATE(:FROM_DATE, 'yyyy-MM-dd'),(3)), 'DD-MON-YYYY') to_Quarterly,
+  TO_CHAR( ADD_MONTHS(TO_DATE(:FROM_DATE, 'yyyy-MM-dd'),(6)), 'DD-MON-YYYY') to_Half_Yearly,
+  TO_CHAR( ADD_MONTHS(TO_DATE(:FROM_DATE, 'yyyy-MM-dd'),(12)), 'DD-MON-YYYY') to_Annually
+FROM dual;
