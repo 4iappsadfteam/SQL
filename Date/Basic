@@ -1,2 +1,11 @@
 Date to 5 days adding
 select TO_DATE(:DATE1)+5  from dual; 
+
+---Get next Date, Month, Year
+SELECT TO_DATE(:DATE1)+:no     AS to_date,
+  TO_DATE(:DATE1)     +(:no*7) AS to_week,
+  TO_CHAR( ADD_MONTHS(:DATE1,:no), 'DD-MON-YYYY') to_month,
+  TO_CHAR( ADD_MONTHS(:DATE1,(3)), 'DD-MON-YYYY') to_quart,
+  TO_CHAR( ADD_MONTHS(:DATE1,(6)), 'DD-MON-YYYY') to_HALF,
+  TO_CHAR( ADD_MONTHS(:DATE1,(12)), 'DD-MON-YYYY') to_year
+FROM dual;
