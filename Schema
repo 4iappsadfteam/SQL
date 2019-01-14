@@ -45,3 +45,5 @@ AND NUM_ROWS = 0;
 select table_name, num_rows from user_tables
 where NUM_ROWS=0; 
 ===========================================================================================================================
+find data
+  SELECT * FROM ALL_source WHERE UPPER(text) LIKE '%SOBHA%';
