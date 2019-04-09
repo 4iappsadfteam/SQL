@@ -1,0 +1,4 @@
+LIST AGG
+select LISTAGG(BOOKING_NUMBER,',')
+    within group (order by BOOKING_NUMBER) as booking_number
+    from XXPM_BOOKING_HEADER_V
