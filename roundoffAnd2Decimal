@@ -1,0 +1,23 @@
+select decode(instr(nvl(:p_num,0),'.'),0, nvl(:p_num,0)||'.00', round(:p_num,2)) from dual
+
+ 
+
+ 
+
+select decode(instr(nvl(p_num,0),'.'),0, nvl(p_num,0)||'.00', round(p_num,2)) from dual
+
+ 
+
+l_total  =>  decode(instr(nvl(l_total  ,0),'.'),0, nvl(l_total  ,0)||'.00', round(l_total  ,2))
+
+ 
+
+ 
+
+xxml.line_amount  =>   decode(instr(nvl(xxml.line_amount  ,0),'.'),0, nvl(xxml.line_amount  ,0)||'.00', round(xxml.line_amount  ,2))
+
+ 
+
+ 
+
+xxml.line_amount  LINE_VAL  =>   decode(instr(nvl(xxml.line_amount  ,0),'.'),0, nvl(xxml.line_amount  ,0)||'.00', round(xxml.line_amount  ,2))  LINE_VAL
