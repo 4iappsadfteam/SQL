@@ -1,0 +1,8 @@
+SELECT * FROM xxpm_property_area where (sysdate-to_date(to_char(LAST_UPDATE_DATE,'DD-Mon-RRRR'),'DD-Mon-RRRR'))<3 ; 
+
+---Gather Schema
+BEGIN
+    dbms_stats.gather_schema_stats(ownname => 'XXPM_TEST', method_opt => 'FOR ALL INDEXED COLUMNS SIZE SKEWONLY', cascade => true
+    , estimate_percent => 100);
+END;
+---
