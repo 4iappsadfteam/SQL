@@ -1,2 +1,5 @@
 Created date = sysdate -1
 where trunc(CREATION_DATE)=to_date(SYSDATE-1,'DD-MM-YY');
+------------------------------
+ WHERE (  min_price
+        - ROUND (min_price, 2)) <> 0
