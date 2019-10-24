@@ -1,0 +1,27 @@
+
+BEGIN
+    FOR i IN (
+        SELECT DISTINCT
+            r.receipt_id,
+            7 source_func_id,
+            h.booking_id source_func_ref_id
+        FROM
+            xxpm_receipt           r,
+            xxpm_receipt_details   d,
+            xxpm_invoice_header    h
+        WHERE
+            r.receipt_id = d.receipt_id
+            AND d.invoice_id = h.invoice_id
+            AND r.source_func_id IS NULL
+            AND r.source_func_ref_id IS NULL
+    ) LOOP UPDATE xxpm_receipt
+    SET
+        source_func_id = i.source_func_id,
+        source_func_ref_id = i.source_func_ref_id
+    WHERE
+        receipt_id = i.receipt_id;
+
+    END LOOP;
+
+    --COMMIT;
+END;
