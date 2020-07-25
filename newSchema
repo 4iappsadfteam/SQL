@@ -5,3 +5,14 @@ alter profile DEFAULT limit PASSWORD_REUSE_TIME unlimited;
 GRANT CONNECT TO bitest;
 GRANT CONNECT, RESOURCE, DBA TO bitest;
 GRANT UNLIMITED TABLESPACE TO bitest;
+
+
+GRANT
+  SELECT,
+  INSERT,
+  UPDATE,
+  DELETE
+ON
+ tablename
+TO
+  schemaname;
